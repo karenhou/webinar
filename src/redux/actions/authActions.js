@@ -17,19 +17,18 @@ export const logoutUser = () => {
 
       console.log("logoutUser result ", result);
 
-      if (result) {
+      if (result.status === 200) {
         // Remove token from localStorage
         localStorage.removeItem("jwtToken");
         // Remove auth header for future requests
         setAuthToken(false);
         // Set current user to {} which will set isAuthenticated to false
         dispatch(setCurrentUser({}));
+
         return {
-          data: {
-            code: "200",
-            data: "",
-            msg: "Logout successful, now redirect",
-          },
+          code: result.status,
+          data: "",
+          msg: "Logout successful, now redirect",
         };
       } else {
         dispatch({
@@ -45,17 +44,15 @@ export const logoutUser = () => {
         payload: error,
       });
       return {
-        data: {
-          code: "400",
-          data: {},
-          msg: "[logoutUser] went wrong " + JSON.stringify(error),
-        },
+        code: 400,
+        data: {},
+        msg: "[logoutUser] went wrong " + JSON.stringify(error),
       };
     }
   };
 };
 
-export const loginUser = (userData, history) => {
+export const loginUser = (userData) => {
   return async (dispatch) => {
     let result;
 
@@ -72,12 +69,11 @@ export const loginUser = (userData, history) => {
         const decoded = jwt_decode(auth.access_token);
         dispatch(setCurrentUser(decoded));
         dispatch(clearErrors());
+
         return {
-          data: {
-            code: "200",
-            data: "",
-            msg: "Login successful, now redirect",
-          },
+          code: result.status,
+          data: "",
+          msg: "Login successful, now redirect",
         };
       } else {
         dispatch({
@@ -93,11 +89,9 @@ export const loginUser = (userData, history) => {
         payload: error,
       });
       return {
-        data: {
-          code: "400",
-          data: {},
-          msg: "[loginUser] went wrong " + JSON.stringify(error),
-        },
+        code: 403,
+        data: {},
+        msg: "[loginUser] went wrong " + JSON.stringify(error),
       };
     }
   };
@@ -127,25 +121,21 @@ export const clearErrors = () => {
   };
 };
 
-export const fetchPostList = () => {
+export const fetchPostList = (pageNum) => {
   return async (dispatch) => {
     let result;
 
     try {
       result = await axios.get(
-        API_BASE_URL + "/post/analysis?per_page=12&page=1",
+        `${API_BASE_URL}/post/analysis?per_page=12&page=${pageNum}`,
         {}
       );
 
-      console.log("fetchPostList result ", result.data);
-
-      if (result) {
+      if (result.status === 200) {
         return {
-          data: {
-            code: "200",
-            data: result.data,
-            msg: "fetchPostList successful",
-          },
+          code: result.status,
+          data: result.data.data,
+          msg: "fetchPostList successful",
         };
       } else {
         dispatch({
@@ -161,11 +151,129 @@ export const fetchPostList = () => {
         payload: error,
       });
       return {
-        data: {
-          code: "400",
-          data: {},
-          msg: "[fetchPostList] went wrong " + JSON.stringify(error),
-        },
+        code: 400,
+        data: {},
+        msg: "[fetchPostList] went wrong " + JSON.stringify(error),
+      };
+    }
+  };
+};
+
+export const fetchFavouriteList = () => {
+  return async (dispatch) => {
+    let result;
+
+    try {
+      result = await axios.get(
+        `${API_BASE_URL}/me/user/favourite/post-analysis`,
+        {}
+      );
+
+      console.log("fetchFavouriteList result ", result);
+
+      if (result.status === 200) {
+        return {
+          code: result.status,
+          data: result.data.data,
+          msg: "fetchFavouriteList successful",
+        };
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: result.data.msg,
+        });
+        return result.data;
+      }
+    } catch (error) {
+      console.log("catched fetchFavouriteList err ", error);
+      dispatch({
+        type: GET_ERRORS,
+        payload: error,
+      });
+      return {
+        code: 400,
+        data: {},
+        msg: "[fetchFavouriteList] went wrong " + JSON.stringify(error),
+      };
+    }
+  };
+};
+
+export const addFavouritePost = (userData) => {
+  return async (dispatch) => {
+    let result;
+
+    try {
+      result = await axios.post(
+        `${API_BASE_URL}/me/user/favourite/post-analysis/${userData.postID}`,
+        {}
+      );
+
+      console.log("addFavouritePost result ", result);
+
+      if (result.status === 200) {
+        return {
+          code: result.status,
+          data: "",
+          msg: `addFavouritePost ${userData.postID} successful`,
+        };
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: result.data.msg,
+        });
+        return result.data;
+      }
+    } catch (error) {
+      console.log("catched addFavouritePost err ", error);
+      dispatch({
+        type: GET_ERRORS,
+        payload: error,
+      });
+      return {
+        code: 400,
+        data: {},
+        msg: "[addFavouritePost] went wrong " + JSON.stringify(error),
+      };
+    }
+  };
+};
+
+export const removeFavouritePost = (postID) => {
+  return async (dispatch) => {
+    let result;
+
+    try {
+      result = await axios.delete(
+        `${API_BASE_URL}/me/user/favourite/post-analysis/${postID}`,
+        {}
+      );
+
+      console.log("removeFavouritePost result ", result);
+
+      if (result.status === 200) {
+        return {
+          code: result.data.status_code,
+          data: "",
+          msg: `removeFavouritePost ${postID} successful`,
+        };
+      } else {
+        dispatch({
+          type: GET_ERRORS,
+          payload: result.data.msg,
+        });
+        return result.data;
+      }
+    } catch (error) {
+      console.log("catched removeFavouritePost err ", error);
+      dispatch({
+        type: GET_ERRORS,
+        payload: error,
+      });
+      return {
+        code: 400,
+        data: {},
+        msg: "[removeFavouritePost] went wrong " + JSON.stringify(error),
       };
     }
   };
