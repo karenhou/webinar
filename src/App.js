@@ -1,6 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { connect } from "react-redux";
-import { setCurrentUser, logoutUser } from "./redux/actions/authActions";
+import {
+  setCurrentUser,
+  logoutUser,
+  addFavouritePost,
+} from "./redux/actions/authActions";
 import setAuthToken from "./utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import store from "./redux/store";
@@ -36,15 +40,27 @@ const scrollDown = (ref) => {
     behavior: "smooth",
   });
 };
-const App = ({ auth, logoutUser }) => {
+const App = ({ auth, logoutUser, addFavouritePost }) => {
   const formSection = useRef(null);
-  // console.log("app ", auth);
+  const [formTopic, setFormTopic] = useState("N/A");
+  const [postID, setPostID] = useState("");
+
   return (
     <div className="App">
       <NavBar isAuthed={auth.isAuthenticated} logoutUser={logoutUser} />
       <Hero />
-      <WebinarList scrollDown={scrollDown} formSection={formSection} />
-      <RegisterForm ref={formSection} />
+      <WebinarList
+        scrollDown={scrollDown}
+        formSection={formSection}
+        setFormTopic={setFormTopic}
+        setPostID={setPostID}
+      />
+      <RegisterForm
+        ref={formSection}
+        formTopic={formTopic}
+        postID={postID}
+        addFavouritePost={addFavouritePost}
+      />
     </div>
   );
 };
@@ -54,4 +70,8 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { setCurrentUser, logoutUser })(App);
+export default connect(mapStateToProps, {
+  setCurrentUser,
+  logoutUser,
+  addFavouritePost,
+})(App);
