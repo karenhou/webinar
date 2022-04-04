@@ -6,19 +6,27 @@ import store from "./redux/store";
 import "./index.css";
 import App from "./App";
 import Login from "./routes/login";
+import MyWebinars from "./routes/myWebinars";
 import reportWebVitals from "./reportWebVitals";
+import { ThemeProvider } from "styled-components";
 
 const rootElement = document.getElementById("root");
-
+const theme = {
+  primary: "#013881",
+  dk: "#01254F",
+};
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <Routes>
-          <Route index path="/" element={<App />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Routes>
+            <Route index path="/" element={<App />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/my_webinars" element={<MyWebinars />} />
+          </Routes>
+        </Router>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   rootElement
