@@ -135,7 +135,7 @@ const RegisterForm = React.forwardRef(
       if (email.trim().length === 0) {
         setEmailError("Field required, cannot be empty");
       }
-
+      //eslint-disable-next-line
       const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
       if (!email.trim().match(emailFormat)) {

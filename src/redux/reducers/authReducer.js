@@ -7,7 +7,7 @@ const initialState = {
   user: {},
 };
 
-export default function (state = initialState, action) {
+export default function authReducer(state = initialState, action) {
   // console.log("redux ", action.payload);
   switch (action.type) {
     case SET_CURRENT_USER:
