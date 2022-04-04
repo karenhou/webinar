@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { loginUser } from "../redux/actions/authActions";
 
@@ -83,7 +83,7 @@ const H3 = styled.div`
   font-size: 24px;
 `;
 
-const Login = ({ loginUser }) => {
+const Login = ({ loginUser, auth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -97,6 +97,10 @@ const Login = ({ loginUser }) => {
       navigate("/");
     }
   };
+
+  if (auth.isAuthenticated) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <LoginContainer>

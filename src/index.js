@@ -9,7 +9,8 @@ import Login from "./routes/login";
 import MyWebinars from "./routes/myWebinars";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "styled-components";
-
+import PrivateRoute from "./components/HOC/PrivateRoute";
+import NotFound from "./routes/404";
 const rootElement = document.getElementById("root");
 const theme = {
   primary: "#013881",
@@ -23,7 +24,15 @@ ReactDOM.render(
           <Routes>
             <Route index path="/" element={<App />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/my_webinars" element={<MyWebinars />} />
+            <Route
+              path="/my_webinars"
+              element={
+                <PrivateRoute>
+                  <MyWebinars />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </Router>
       </ThemeProvider>

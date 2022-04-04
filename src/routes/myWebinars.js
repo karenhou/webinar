@@ -12,10 +12,6 @@ import registerIcon from "../assets/images/pointerBtn.png";
 import NavBar from "../components/navbar";
 import { useNavigate } from "react-router";
 
-import setAuthToken from "../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
-import store from "../redux/store";
-
 const WebinarContainer = styled.section`
   padding: 80px 93.5px;
   background: gray;
@@ -90,25 +86,6 @@ const RegisterIcon = styled.div`
   justify-content: end;
 `;
 
-//check token for auth, it token expired, logout user
-if (localStorage.jwtToken !== "undefined" && localStorage.jwtToken) {
-  //set token to auth header
-  setAuthToken(localStorage.jwtToken);
-  //decode token to get user data
-  const decoded = jwt_decode(localStorage.jwtToken);
-  // console.log("inapp ", decoded);
-  //set current user
-  store.dispatch(setCurrentUser(decoded));
-
-  //check for expired token
-  const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    store.dispatch(logoutUser());
-
-    //redirect to login
-    window.location.href = "/login";
-  }
-}
 const MyWebinars = ({
   fetchFavouriteList,
   auth,
@@ -121,13 +98,13 @@ const MyWebinars = ({
     const getFavouriteLists = async () => {
       const result = await fetchFavouriteList();
 
-      console.log("fav ", result);
       if (result.code === 200) {
         setWebinarList([...result.data]);
       }
     };
 
     getFavouriteLists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUnfav = async (id) => {
