@@ -21,6 +21,11 @@ const ButtonD = styled.button`
   margin-right: 24px;
   width: 115px;
   height: 40px;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
 `;
 
 const ButtonL = styled.button`
@@ -55,17 +60,23 @@ const NavBar = ({ isAuthed, logoutUser }) => {
   return (
     <Header>
       <LeftContainer>
-        <img src={CompanyLogo} alt="CompanyLogo" />
+        <Link to="/">
+          <img src={CompanyLogo} alt="CompanyLogo" />
+        </Link>
       </LeftContainer>
       <RightContainer>
-        <ButtonD>My Webinar</ButtonD>
         {isAuthed ? (
-          <ButtonL
-            onClick={() => {
-              logoutUser();
-            }}>
-            Logout
-          </ButtonL>
+          <>
+            <ButtonD>
+              <Link to="/my_webinars">My Webinar</Link>
+            </ButtonD>
+            <ButtonL
+              onClick={() => {
+                logoutUser();
+              }}>
+              Logout
+            </ButtonL>
+          </>
         ) : (
           <ButtonL>
             <Link to="/login">Login</Link>
