@@ -11,7 +11,6 @@ const setAuthToken = (token) => {
   } else {
     delete axios.defaults.headers.common["Authorization"];
   }
-  console.log("token ", axios.defaults.headers);
 };
 
 export default setAuthToken;
