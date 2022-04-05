@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, CLEAR_ERRORS } from "./types";
+import { SET_CURRENT_USER } from "./types";
 
 const API_BASE_URL = "https://g1api.finlogix.com/v1";
 
@@ -31,18 +31,10 @@ export const logoutUser = () => {
           msg: "Logout successful, now redirect",
         };
       } else {
-        dispatch({
-          type: GET_ERRORS,
-          payload: result.data.msg,
-        });
         return result.data;
       }
     } catch (error) {
       console.log("catched logoutUser err ", error);
-      dispatch({
-        type: GET_ERRORS,
-        payload: error,
-      });
       return {
         code: 400,
         data: {},
@@ -57,8 +49,7 @@ export const loginUser = (userData) => {
     let result;
 
     try {
-      result = await axios.post(API_BASE_URL + "/auth/login/email", userData);
-
+      result = await axios.post(`${API_BASE_URL}/auth/login/email`, userData);
       console.log("loginUser result ", result.data);
 
       if (result) {
@@ -68,7 +59,6 @@ export const loginUser = (userData) => {
         // Decode token to get user data
         const decoded = jwt_decode(auth.access_token);
         dispatch(setCurrentUser(decoded));
-        dispatch(clearErrors());
 
         return {
           code: result.status,
@@ -76,21 +66,13 @@ export const loginUser = (userData) => {
           msg: "Login successful, now redirect",
         };
       } else {
-        dispatch({
-          type: GET_ERRORS,
-          payload: result.data.msg,
-        });
         return result.data;
       }
     } catch (error) {
       console.log("catched loginUser err ", error);
-      dispatch({
-        type: GET_ERRORS,
-        payload: error,
-      });
       return {
         code: 403,
-        data: {},
+        data: "",
         msg: "[loginUser] went wrong " + JSON.stringify(error),
       };
     }
@@ -107,17 +89,6 @@ export const setCurrentUser = (decoded) => {
   return {
     type: SET_CURRENT_USER,
     payload: decoded,
-  };
-};
-
-/**
- * clearErrors
- *
- * @returns {function} redux function call to clear errors
- */
-export const clearErrors = () => {
-  return {
-    type: CLEAR_ERRORS,
   };
 };
 
@@ -138,18 +109,10 @@ export const fetchPostList = (pageNum) => {
           msg: "fetchPostList successful",
         };
       } else {
-        dispatch({
-          type: GET_ERRORS,
-          payload: result.data.msg,
-        });
         return result.data;
       }
     } catch (error) {
       console.log("catched fetchPostList err ", error);
-      dispatch({
-        type: GET_ERRORS,
-        payload: error,
-      });
       return {
         code: 400,
         data: {},
@@ -178,18 +141,10 @@ export const fetchFavouriteList = () => {
           msg: "fetchFavouriteList successful",
         };
       } else {
-        dispatch({
-          type: GET_ERRORS,
-          payload: result.data.msg,
-        });
         return result.data;
       }
     } catch (error) {
       console.log("catched fetchFavouriteList err ", error);
-      dispatch({
-        type: GET_ERRORS,
-        payload: error,
-      });
       return {
         code: 400,
         data: {},
@@ -218,18 +173,11 @@ export const addFavouritePost = (userData) => {
           msg: `addFavouritePost ${userData.postID} successful`,
         };
       } else {
-        dispatch({
-          type: GET_ERRORS,
-          payload: result.data.msg,
-        });
         return result.data;
       }
     } catch (error) {
       console.log("catched addFavouritePost err ", error);
-      dispatch({
-        type: GET_ERRORS,
-        payload: error,
-      });
+
       return {
         code: 400,
         data: {},
@@ -258,18 +206,10 @@ export const removeFavouritePost = (postID) => {
           msg: `removeFavouritePost ${postID} successful`,
         };
       } else {
-        dispatch({
-          type: GET_ERRORS,
-          payload: result.data.msg,
-        });
         return result.data;
       }
     } catch (error) {
       console.log("catched removeFavouritePost err ", error);
-      dispatch({
-        type: GET_ERRORS,
-        payload: error,
-      });
       return {
         code: 400,
         data: {},

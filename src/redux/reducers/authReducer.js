@@ -1,5 +1,4 @@
 import { isObjEmpty } from "../../utils/tool";
-
 import { SET_CURRENT_USER } from "../actions/types";
 
 const initialState = {
@@ -8,7 +7,6 @@ const initialState = {
 };
 
 export default function authReducer(state = initialState, action) {
-  // console.log("redux ", action.payload);
   switch (action.type) {
     case SET_CURRENT_USER:
       return {
