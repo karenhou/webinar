@@ -6,44 +6,49 @@ import CompanyLogo from "../assets/images/ACYBanner.png";
 const Header = styled.header`
   padding: 0 90px;
   display: flex;
-  border-bottom: solid #fff 2px;
+  border-bottom: solid ${(props) => props.theme.white} 2px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   height: 132px;
   align-items: center;
 `;
 
-const ButtonD = styled.button`
+const Button = styled.button`
   padding: 10px 16px;
-  border: none;
   border-radius: 2px;
-  background-color: #013881;
-  color: #fff;
-  margin-right: 24px;
   width: 115px;
   height: 40px;
-
   a {
     text-decoration: none;
-    color: #fff;
-  }
-`;
-
-const ButtonL = styled.button`
-  padding: 10px 16px;
-  border: solid #013881 2px;
-  border-radius: 2px;
-  background-color: #fff;
-  color: #013881;
-  width: 115px;
-  height: 40px;
-
-  a {
-    text-decoration: none;
-    color: #013881;
   }
 
   :hover {
     cursor: pointer;
+  }
+
+  :disabled {
+    cursor: not-allowed;
+    background-color: gray;
+  }
+`;
+
+export const ButtonD = styled(Button)`
+  border: none;
+  background-color: ${(props) => props.theme.primary};
+  color: ${(props) => props.theme.white};
+  margin-right: 24px;
+
+  a {
+    color: ${(props) => props.theme.white};
+  }
+`;
+
+export const ButtonL = styled(Button)`
+  border: solid ${(props) => props.theme.primary} 2px;
+  background-color: ${(props) => props.theme.white};
+  color: ${(props) => props.theme.primary};
+
+  a {
+    color: ${(props) => props.theme.primary};
   }
 `;
 

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { Content } from "./hero";
 
 const RegisterFormContainer = styled.section`
   padding: 0 93px;
   text-align: center;
   margin: 80px 0;
+  display: flex;
+  justify-content: center;
 `;
 
 const FormCard = styled.div`
@@ -17,24 +20,17 @@ const FormCard = styled.div`
   width: 1180px;
   height: 748px;
   padding: 80px 300px;
-  font-weight: 400;
-  font-size: 16px;
 `;
 
 const TitleH3 = styled.h3`
   font-weight: 500;
   line-height: 30px;
-  color: #01254f;
+  color: ${(props) => props.theme.darkBlue};
   margin-bottom: 20px;
 `;
 
-const Content = styled.div`
-  line-height: 24px;
-  color: rgba(0, 0, 0, 0.65);
-  margin-bottom: 40px;
-`;
-
 const Form = styled.form`
+  margin-top: 40px;
   text-align: left;
 `;
 
@@ -56,25 +52,22 @@ const InputLabel = styled.label`
 `;
 
 const DropDown = styled.select`
-  background: #ffffff;
   border: 1px solid #c6c6c6;
   box-sizing: border-box;
   border-radius: 4px;
   line-height: 40px;
   min-height: 55px;
   font-size: 16px;
-  color: #333;
+  color: ${(props) => props.theme.white};
   white-space: pre-line;
   padding: 4px 12px;
 `;
 
 const Option = styled.option`
-  background: #ffffff;
   min-height: 40px;
 `;
 
 const TextInput = styled.input`
-  background: #ffffff;
   border: 1px solid #c6c6c6;
   box-sizing: border-box;
   border-radius: 4px;
@@ -88,7 +81,7 @@ const SubmitButton = styled.button`
   width: 100%;
   border-radius: 4px;
   border: none;
-  color: white;
+  color: ${(props) => props.theme.white};
   padding-top: 13px;
   padding-bottom: 13px;
   margin-top: 30px;
@@ -190,7 +183,7 @@ const RegisterForm = React.forwardRef(
             <InputBox>
               <InputLabel>Topic</InputLabel>
               <DropDown>
-                <Option value="hello">{formTopic}</Option>
+                <Option>{formTopic}</Option>
               </DropDown>
             </InputBox>
 

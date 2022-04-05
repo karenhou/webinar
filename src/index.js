@@ -14,7 +14,8 @@ import NotFound from "./routes/404";
 const rootElement = document.getElementById("root");
 const theme = {
   primary: "#013881",
-  dk: "#01254F",
+  darkBlue: "#01254F",
+  white: "#fff",
 };
 ReactDOM.render(
   <React.StrictMode>

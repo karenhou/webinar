@@ -10,82 +10,20 @@ import {
 import moment from "moment";
 import registerIcon from "../assets/images/pointerBtn.png";
 import NavBar from "../components/navbar";
+import {
+  WebinarListContainer,
+  WebinarCard,
+  ItemTitle,
+  ItemContent,
+  ItemTimestamp,
+  RegisterRow,
+  RegisterIcon,
+} from "../components/webinarList";
 
-const WebinarContainer = styled.section`
-  padding: 80px 93.5px;
-  background: gray;
+const WebinarContainer = styled(WebinarListContainer)`
   display: flex;
   flex-wrap: wrap;
   min-height: 68vh;
-`;
-
-const WebinarCard = styled.div`
-  width: 380px;
-  height: 300px;
-  background: #ffffff;
-  border: 1px solid #d6d6d6;
-  box-sizing: border-box;
-  box-shadow: 1px 2px 6px rgba(219, 219, 219, 0.5);
-  border-radius: 4px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  color: ${(props) => props.theme.darkBlue};
-  padding: 20px;
-  display: flex;
-  flex-flow: column;
-`;
-
-const ItemCreatedAt = styled.h4`
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 900;
-  font-size: 14px;
-  line-height: 20px;
-`;
-
-const ItemTitle = styled.h3`
-  font-weight: 900;
-  font-size: 16px;
-  line-height: 24px;
-  margin-top: 20px;
-`;
-
-const ItemContent = styled.div`
-  margin-top: 12px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(0, 0, 0, 0.65);
-`;
-
-const ItemTimestamp = styled.div`
-  margin-top: 20px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(0, 0, 0, 0.65);
-`;
-
-const RegisterRow = styled.div`
-  display: flex;
-  flex-grow: 2;
-  align-items: flex-end;
-  font-weight: 900;
-  font-size: 16px;
-  line-height: 24px;
-  color: #6bb718;
-
-  div {
-    :hover {
-      cursor: pointer;
-    }
-  }
-`;
-
-const RegisterIcon = styled.div`
-  display: flex;
-  flex-grow: 2;
-  justify-content: end;
 `;
 
 const MyWebinars = ({
@@ -127,9 +65,7 @@ const MyWebinars = ({
           webinarList.map((p) => {
             return (
               <WebinarCard key={p.id}>
-                <ItemCreatedAt>
-                  {moment(p.created_at).format("DD/MM/YYYY")}
-                </ItemCreatedAt>
+                <h4>{moment(p.created_at).format("DD/MM/YYYY")}</h4>
                 <ItemTitle>{p.title}</ItemTitle>
                 <ItemContent>{p.content.slice(0, 45) + "..."}</ItemContent>
                 <ItemTimestamp>
@@ -158,7 +94,6 @@ const MyWebinars = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors,
 });
 
 export default connect(mapStateToProps, {

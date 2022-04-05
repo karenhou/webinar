@@ -6,7 +6,7 @@ import registerIcon from "../assets/images/pointerBtn.png";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
-const WebinarContainer = styled.section`
+export const WebinarListContainer = styled.section`
   padding: 80px 93.5px;
   background: gray;
 `;
@@ -19,7 +19,7 @@ const WebniarBox = styled.div`
   flex-wrap: wrap;
 `;
 
-const WebinarCard = styled.div`
+export const WebinarCard = styled.div`
   width: 380px;
   height: 300px;
   background: #ffffff;
@@ -29,58 +29,50 @@ const WebinarCard = styled.div`
   border-radius: 4px;
   margin-right: 20px;
   margin-bottom: 20px;
-  color: ${(props) => props.theme.dk};
+  color: ${(props) => props.theme.darkBlue};
   padding: 20px;
   display: flex;
   flex-flow: column;
-`;
-
-const ItemCreatedAt = styled.h4`
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 900;
   font-size: 14px;
   line-height: 20px;
+  font-weight: 900;
 `;
 
-const ItemTitle = styled.h3`
-  font-weight: 900;
+export const ItemTitle = styled.h3`
   font-size: 16px;
   line-height: 24px;
   margin-top: 20px;
 `;
 
-const ItemContent = styled.div`
+const ItemContentStyle = styled.div`
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.65);
+`;
+
+export const ItemContent = styled(ItemContentStyle)`
   margin-top: 12px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(0, 0, 0, 0.65);
 `;
 
-const ItemTimestamp = styled.div`
+export const ItemTimestamp = styled(ItemContentStyle)`
   margin-top: 20px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(0, 0, 0, 0.65);
 `;
 
-const RegisterRow = styled.div`
+export const RegisterRow = styled.div`
   display: flex;
   flex-grow: 2;
   align-items: flex-end;
-  font-weight: 900;
   font-size: 16px;
   line-height: 24px;
   color: #6bb718;
 
-  :hover {
-    cursor: pointer;
+  div {
+    :hover {
+      cursor: pointer;
+    }
   }
 `;
 
-const RegisterIcon = styled.div`
+export const RegisterIcon = styled.div`
   display: flex;
   flex-grow: 2;
   justify-content: end;
@@ -129,16 +121,14 @@ const WebinarList = ({
   }, []);
 
   return (
-    <WebinarContainer>
+    <WebinarListContainer>
       <WebniarBox onScroll={eventListener}>
         {posts
           .filter((x) => x.favourited === false)
           .map((p) => {
             return (
               <WebinarCard key={p.id}>
-                <ItemCreatedAt>
-                  {moment(p.created_at).format("DD/MM/YYYY")}
-                </ItemCreatedAt>
+                <h4>{moment(p.created_at).format("DD/MM/YYYY")}</h4>
                 <ItemTitle>{p.title}</ItemTitle>
                 <ItemContent>{p.content.slice(0, 45) + "..."}</ItemContent>
                 <ItemTimestamp>
@@ -167,13 +157,12 @@ const WebinarList = ({
             );
           })}
       </WebniarBox>
-    </WebinarContainer>
+    </WebinarListContainer>
   );
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { fetchPostList })(WebinarList);

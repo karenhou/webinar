@@ -14,12 +14,16 @@ const ContentBox = styled.div`
 const H3 = styled.h3`
   font-size: 28px;
   font-weight: 500;
-  color: #01254f;
+  color: ${(props) => props.theme.darkBlue};
   margin-bottom: 20px;
+  line-height: 40px;
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
+  font-weight: 400;
   font-size: 16px;
+  line-height: 24px;
+  text-align: center;
   color: rgba(0, 0, 0, 0.65);
 `;
 
