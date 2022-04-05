@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { loginUser } from "../redux/actions/authActions";
+import { ButtonD, ButtonL } from "../components/navbar";
 
 const LoginContainer = styled.section`
   margin: auto;
@@ -38,39 +39,6 @@ const TextInput = styled.input`
   padding: 4px 12px;
 `;
 
-const ButtonD = styled.button`
-  padding: 10px 16px;
-  border: none;
-  border-radius: 2px;
-  background-color: #013881;
-  color: #fff;
-  margin-right: 24px;
-  width: 115px;
-  height: 40px;
-
-  :hover {
-    cursor: pointer;
-  }
-  :disabled {
-    cursor: not-allowed;
-    background-color: gray;
-  }
-`;
-
-const ButtonL = styled.button`
-  padding: 10px 16px;
-  border: solid #013881 2px;
-  border-radius: 2px;
-  background-color: #fff;
-  color: #013881;
-  width: 115px;
-  height: 40px;
-
-  :hover {
-    cursor: pointer;
-  }
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
@@ -83,18 +51,33 @@ const H3 = styled.div`
   font-size: 24px;
 `;
 
+const ErrorText = styled.div`
+  margin-top: 12px;
+  color: red;
+  text-align: center;
+`;
+
 const Login = ({ loginUser, auth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const result = await loginUser({ email, password });
 
     if (result.code === 200) {
       navigate("/");
+    } else {
+      setIsLoading(false);
+      setErrorMsg("Either password/email incorrect, check again");
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 3000);
     }
   };
 
@@ -128,13 +111,14 @@ const Login = ({ loginUser, auth }) => {
           <ButtonD
             type="button"
             onClick={(e) => handleLogin(e)}
-            disabled={email === "" || password === ""}>
+            disabled={email === "" || password === "" || isLoading}>
             Login
           </ButtonD>
           <Link to="/">
             <ButtonL>Cancel</ButtonL>
           </Link>
         </ButtonContainer>
+        {errorMsg && <ErrorText>{errorMsg}</ErrorText>}
       </LoginForm>
     </LoginContainer>
   );

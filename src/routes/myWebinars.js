@@ -10,13 +10,13 @@ import {
 import moment from "moment";
 import registerIcon from "../assets/images/pointerBtn.png";
 import NavBar from "../components/navbar";
-import { useNavigate } from "react-router";
 
 const WebinarContainer = styled.section`
   padding: 80px 93.5px;
   background: gray;
   display: flex;
   flex-wrap: wrap;
+  min-height: 68vh;
 `;
 
 const WebinarCard = styled.div`
@@ -29,7 +29,7 @@ const WebinarCard = styled.div`
   border-radius: 4px;
   margin-right: 20px;
   margin-bottom: 20px;
-  color: ${(props) => props.theme.dk};
+  color: ${(props) => props.theme.darkBlue};
   padding: 20px;
   display: flex;
   flex-flow: column;
@@ -75,8 +75,10 @@ const RegisterRow = styled.div`
   line-height: 24px;
   color: #6bb718;
 
-  :hover {
-    cursor: pointer;
+  div {
+    :hover {
+      cursor: pointer;
+    }
   }
 `;
 
@@ -93,7 +95,7 @@ const MyWebinars = ({
   removeFavouritePost,
 }) => {
   const [webinarList, setWebinarList] = useState("");
-  const navigate = useNavigate();
+
   useEffect(() => {
     const getFavouriteLists = async () => {
       const result = await fetchFavouriteList();
@@ -109,9 +111,11 @@ const MyWebinars = ({
 
   const handleUnfav = async (id) => {
     const result = await removeFavouritePost(id);
+
     console.log("handleUnfav ", result);
     if (result.code === 200) {
-      navigate(0);
+      let temp = [...webinarList];
+      setWebinarList([...temp.filter((x) => x.id !== id)]);
     }
   };
 
