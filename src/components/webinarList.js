@@ -5,10 +5,15 @@ import { fetchPostList } from "../redux/actions/authActions";
 import registerIcon from "../assets/images/pointerBtn.png";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { device } from "../utils/device";
 
 export const WebinarListContainer = styled.section`
   padding: 80px 93.5px;
   background: gray;
+
+  @media ${device.tablet} {
+    padding: 40px 34px;
+  }
 `;
 
 const WebniarBox = styled.div`
@@ -17,6 +22,10 @@ const WebniarBox = styled.div`
   flex-direction: column;
   overflow-x: scroll;
   flex-wrap: wrap;
+
+  @media ${device.tablet} {
+    height: 975px;
+  }
 `;
 
 export const WebinarCard = styled.div`
@@ -36,6 +45,10 @@ export const WebinarCard = styled.div`
   font-size: 14px;
   line-height: 20px;
   font-weight: 900;
+
+  @media ${device.tablet} {
+    width: 340px;
+  }
 `;
 
 export const ItemTitle = styled.h3`

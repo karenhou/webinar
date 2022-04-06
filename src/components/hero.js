@@ -1,14 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import { device } from "../utils/device";
 
 const HeroContainer = styled.section`
   width: 800px;
   margin: auto;
   text-align: center;
+
+  @media ${device.tablet} {
+    width: 700px;
+    margin: 0 34px;
+  }
 `;
 
 const ContentBox = styled.div`
   padding: 87px 0px;
+
+  @media ${device.tablet} {
+    padding: 156px 0 56px 0px;
+  }
 `;
 
 const H3 = styled.h3`

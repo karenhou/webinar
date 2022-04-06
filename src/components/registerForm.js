@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { Content } from "./hero";
+import { device } from "../utils/device";
 
 const RegisterFormContainer = styled.section`
   padding: 0 93px;
@@ -9,6 +10,13 @@ const RegisterFormContainer = styled.section`
   margin: 80px 0;
   display: flex;
   justify-content: center;
+
+  @media ${device.tablet} {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
 `;
 
 const FormCard = styled.div`
@@ -20,6 +28,13 @@ const FormCard = styled.div`
   width: 1180px;
   height: 748px;
   padding: 80px 300px;
+
+  @media ${device.tablet} {
+    padding: 80px 34px;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 360px;
+  }
 `;
 
 const TitleH3 = styled.h3`
@@ -27,6 +42,16 @@ const TitleH3 = styled.h3`
   line-height: 30px;
   color: ${(props) => props.theme.darkBlue};
   margin-bottom: 20px;
+
+  @media ${device.tablet} {
+    font-size: 22px;
+  }
+`;
+
+const RegContent = styled(Content)`
+  @media ${device.tablet} {
+    padding: 0 90px;
+  }
 `;
 
 const Form = styled.form`
@@ -58,9 +83,13 @@ const DropDown = styled.select`
   line-height: 40px;
   min-height: 55px;
   font-size: 16px;
-  color: ${(props) => props.theme.white};
+  color: #333333;
   white-space: pre-line;
   padding: 4px 12px;
+
+  @media ${device.tablet} {
+    min-height: 40px;
+  }
 `;
 
 const Option = styled.option`
@@ -174,16 +203,16 @@ const RegisterForm = React.forwardRef(
       <RegisterFormContainer ref={ref}>
         <FormCard>
           <TitleH3>Register for a Webinar now</TitleH3>
-          <Content>
+          <RegContent>
             Please fill in the form below and you will be contacted by one of
             our professional business experts.
-          </Content>
+          </RegContent>
 
           <Form>
-            <InputBox>
+            <InputBox name="topic">
               <InputLabel>Topic</InputLabel>
               <DropDown>
-                <Option>{formTopic}</Option>
+                <Option value={formTopic}>{formTopic}</Option>
               </DropDown>
             </InputBox>
 
