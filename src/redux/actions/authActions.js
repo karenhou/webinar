@@ -93,7 +93,7 @@ export const setCurrentUser = (decoded) => {
 };
 
 export const fetchPostList = (pageNum) => {
-  return async (dispatch) => {
+  return async () => {
     let result;
 
     try {
@@ -123,7 +123,7 @@ export const fetchPostList = (pageNum) => {
 };
 
 export const fetchFavouriteList = () => {
-  return async (dispatch) => {
+  return async () => {
     let result;
 
     try {
@@ -155,7 +155,7 @@ export const fetchFavouriteList = () => {
 };
 
 export const addFavouritePost = (userData) => {
-  return async (dispatch) => {
+  return async () => {
     let result;
 
     try {
@@ -188,7 +188,7 @@ export const addFavouritePost = (userData) => {
 };
 
 export const removeFavouritePost = (postID) => {
-  return async (dispatch) => {
+  return async () => {
     let result;
 
     try {
